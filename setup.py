@@ -1,3 +1,5 @@
+import os                  #追加。OSの機能のパッケージ
+from glob import glob      #追加。グロブ（ワイルドカード）を扱う関数
 from setuptools import find_packages, setup
 
 package_name = 'mypkg'
@@ -10,6 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),  #追加
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,8 +27,8 @@ setup(
     },
     entry_points={
         'console_scripts':[
-'talker = mypkg.talker:main',      #talker.pyのmain関数をtalkerという名前で
-            #'listener = mypkg.listener:main', #後で使うので書いておいてコメントアウト
+          'talker = mypkg.talker:main',      #talker.pyのmain関数をtalkerという名前で
+           'listener = mypkg.listener:main', #後で使うので書いておいてコメントアウト
         ],
     },
 )
